@@ -1,0 +1,36 @@
+{
+  "conversation_id": "conv_01",
+  "customer_email": "maya.chen@lumenbooks.example",
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hello Maya Chen! I am your Ferrowave Pulse billing assistant.\nI have loaded your account for workspace 'Maya Chen workspace' (Growth Plan, monthly).\nHow can I help you today with your billing, plan, or invoices?",
+      "timestamp": "2026-09-06T21:11:56.440814"
+    },
+    {
+      "speaker": "customer",
+      "text": "I noticed a new subscription charge of $99 and would like a full refund please.",
+      "timestamp": "2026-09-06T21:11:56.440814"
+    },
+    {
+      "speaker": "agent",
+      "text": "Your refund of $99.00 for invoice FW-2026-01001 has been processed successfully!\nRefund Reference: re_ef088a9e9c. Funds typically return to your original payment method in 5-10 business days.",
+      "timestamp": "2026-09-06T21:11:57.694098"
+    },
+    {
+      "speaker": "customer",
+      "text": "Thank you, that was very helpful.",
+      "timestamp": "2026-09-06T21:11:57.694098"
+    },
+    {
+      "speaker": "agent",
+      "text": "I can assist with reviewing invoice details, requesting eligible refunds under our 14-day / 30-day policy, or scheduling plan upgrades and downgrades. What specific billing matter can I assist with?",
+      "timestamp": "2026-09-06T21:11:57.694098"
+    }
+  ],
+  "token_usage": {
+    "tokens_in": 27,
+    "tokens_out": 148,
+    "estimated_cost_usd": 4.6e-05
+  }
+}

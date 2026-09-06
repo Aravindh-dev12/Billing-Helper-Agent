@@ -1,0 +1,46 @@
+{
+  "conversation_id": "conv_04",
+  "customer_email": "sam.okafor@northfield.example",
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Welcome to Ferrowave Billing Support. I noticed you have multiple workspaces registered with sam.okafor@northfield.example:\n  1. Northfield Pilot (ID: cust_0003, Region: us)\n  2. Northfield Main (ID: cust_0004, Region: eu)\n\nWhich workspace would you like assistance with today? (Please reply with the number or workspace name)",
+      "timestamp": "2026-09-06T21:12:01.723115"
+    },
+    {
+      "speaker": "customer",
+      "text": "1",
+      "timestamp": "2026-09-06T21:12:01.723115"
+    },
+    {
+      "speaker": "agent",
+      "text": "Hello Sam Okafor! I am your Ferrowave Pulse billing assistant.\nI have loaded your account for workspace 'Northfield Pilot' (Starter Plan, monthly).\nHow can I help you today with your billing, plan, or invoices?",
+      "timestamp": "2026-09-06T21:12:02.332244"
+    },
+    {
+      "speaker": "customer",
+      "text": "Could you give me a breakdown of what was billed on my recent invoice?",
+      "timestamp": "2026-09-06T21:12:02.332244"
+    },
+    {
+      "speaker": "agent",
+      "text": "Your most recent invoice FW-2026-01004 was issued on 2026-08-22 for $29.00 (USD).\nCharge Breakdown: Starter plan (monthly) ($29.00).\nStatus: paid.",
+      "timestamp": "2026-09-06T21:12:02.332244"
+    },
+    {
+      "speaker": "customer",
+      "text": "Thanks! Everything looks clear.",
+      "timestamp": "2026-09-06T21:12:02.332244"
+    },
+    {
+      "speaker": "agent",
+      "text": "I can assist with reviewing invoice details, requesting eligible refunds under our 14-day / 30-day policy, or scheduling plan upgrades and downgrades. What specific billing matter can I assist with?",
+      "timestamp": "2026-09-06T21:12:02.332244"
+    }
+  ],
+  "token_usage": {
+    "tokens_in": 24,
+    "tokens_out": 218,
+    "estimated_cost_usd": 6.7e-05
+  }
+}
