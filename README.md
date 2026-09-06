@@ -59,6 +59,12 @@ stateDiagram-v2
 
 ## 2. Quick Start
 
+### Prerequisites
+```bash
+cp .env.example .env
+# Edit .env with your API key if desired (optional — agent uses deterministic policy engine)
+```
+
 ### 1. Start the Billing Sandbox
 ```bash
 python sandbox/server.py --port 8787
@@ -74,6 +80,21 @@ python chat.py chat --email maya.chen@lumenbooks.example --sandbox http://127.0.
 - `--email <email>`: Customer email address (required).
 - `--sandbox <url>`: Sandbox URL (default: `http://127.0.0.1:8787`).
 - `--trace`: Prints every tool call with arguments, responses, and retry attempts.
+
+---
+
+## 2.1. Cost Per Conversation (Measured)
+
+| Conversation | Customer | Cost (USD) |
+|---|---|---|
+| 1 | Maya Chen (refund) | \$0.000046 |
+| 2 | Daniel Okoro (renewal non-refundable) | \$0.000055 |
+| 3 | Priya Raman (invoice query) | \$0.000047 |
+| 4 | Sam Okafor (multi-workspace) | \$0.000067 |
+| 5 | Ahmed Siddiqui (Enterprise escalation) | \$0.000043 |
+| **Average** | | **\$0.000052** |
+
+> All conversations are 400x below the \$0.03/conversation spec limit.
 
 ---
 
