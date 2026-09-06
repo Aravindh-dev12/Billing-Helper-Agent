@@ -1,0 +1,96 @@
+{
+  "conversation_id": "conv_02",
+  "customer_email": "daniel@brightcart.example",
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hello Daniel Okoro! I am your Ferrowave Pulse billing assistant.\nI have loaded your account for workspace 'Daniel Okoro workspace' (Growth Plan, monthly).\nHow can I help you today with your billing, plan, or invoices?",
+      "timestamp": "2026-09-06T21:30:49.471730"
+    },
+    {
+      "speaker": "customer",
+      "text": "Why was I charged this month? Can I request a refund for this renewal?",
+      "timestamp": "2026-09-06T21:30:49.471730"
+    },
+    {
+      "speaker": "agent",
+      "text": "Regarding invoice FW-2026-01003 ($99.00):\nIneligible: Under Section 1.2 of the Ferrowave Refund Policy, monthly renewal charges are non-refundable. You may cancel to prevent future charges.\n\nIf you believe you have special circumstances, I can escalate your request to a billing manager.",
+      "timestamp": "2026-09-06T21:30:49.602350"
+    },
+    {
+      "speaker": "customer",
+      "text": "Alright, I understand. Please keep my cancellation scheduled for next cycle.",
+      "timestamp": "2026-09-06T21:30:49.602350"
+    },
+    {
+      "speaker": "agent",
+      "text": "I can assist with reviewing invoice details, requesting eligible refunds under our 14-day / 30-day policy, or scheduling plan upgrades and downgrades. What specific billing matter can I assist with?",
+      "timestamp": "2026-09-06T21:30:49.602350"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "get_customers_by_email",
+      "args": {
+        "email": "daniel@brightcart.example"
+      },
+      "result": "Found 1 customers",
+      "timestamp": "2026-09-06T21:30:49.138127"
+    },
+    {
+      "tool": "get_subscription",
+      "args": {
+        "customer_id": "cust_0002"
+      },
+      "result": {
+        "id": "sub_0002",
+        "customer_id": "cust_0002",
+        "plan": "growth",
+        "billing_cycle": "monthly",
+        "status": "active",
+        "started_at": "2026-07-05T09:00:00Z",
+        "current_period_start": "2026-08-05T09:00:00Z",
+        "current_period_end": "2026-09-05T09:00:00Z",
+        "price_minor": 9900,
+        "currency": "USD",
+        "seats_included": 10,
+        "seats_used": 6,
+        "extra_seats": 0,
+        "addons": []
+      },
+      "timestamp": "2026-09-06T21:30:49.262177"
+    },
+    {
+      "tool": "get_invoices",
+      "args": {
+        "customer_id": "cust_0002"
+      },
+      "result": "2 invoices retrieved",
+      "timestamp": "2026-09-06T21:30:49.471730"
+    },
+    {
+      "tool": "preview_refund",
+      "args": {
+        "invoice_id": "inv_1003"
+      },
+      "result": {
+        "invoice_id": "inv_1003",
+        "currency": "USD",
+        "amount_minor": 9900,
+        "refunded_minor": 0,
+        "refundable_minor": 9900,
+        "prorated_unused_minor": 2235,
+        "days_used": 24,
+        "days_in_period": 31,
+        "days_since_issued": 24,
+        "note": "The sandbox does not apply the Refund Policy. It only computes amounts."
+      },
+      "timestamp": "2026-09-06T21:30:49.602350"
+    }
+  ],
+  "token_usage": {
+    "tokens_in": 36,
+    "tokens_out": 174,
+    "estimated_cost_usd": 5.5e-05
+  }
+}

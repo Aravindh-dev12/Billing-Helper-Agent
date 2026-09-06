@@ -1,0 +1,77 @@
+{
+  "conversation_id": "conv_05",
+  "customer_email": "ahmed@meridian-systems.example",
+  "turns": [
+    {
+      "speaker": "agent",
+      "text": "Hello Ahmed Siddiqui! I am your Ferrowave Pulse billing assistant.\nI have loaded your account for workspace 'Ahmed Siddiqui workspace' (Enterprise Plan, annual).\nHow can I help you today with your billing, plan, or invoices?",
+      "timestamp": "2026-09-06T21:30:54.135912"
+    },
+    {
+      "speaker": "customer",
+      "text": "We need to downgrade our Enterprise account to a standard Starter plan.",
+      "timestamp": "2026-09-06T21:30:54.135912"
+    },
+    {
+      "speaker": "agent",
+      "text": "Enterprise plans are managed under dedicated annual contracts. I will escalate your downgrade request to your Account Executive.",
+      "timestamp": "2026-09-06T21:30:54.135912"
+    },
+    {
+      "speaker": "customer",
+      "text": "Understood, please have our account executive contact me.",
+      "timestamp": "2026-09-06T21:30:54.135912"
+    },
+    {
+      "speaker": "agent",
+      "text": "I can assist with reviewing invoice details, requesting eligible refunds under our 14-day / 30-day policy, or scheduling plan upgrades and downgrades. What specific billing matter can I assist with?",
+      "timestamp": "2026-09-06T21:30:54.135912"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "get_customers_by_email",
+      "args": {
+        "email": "ahmed@meridian-systems.example"
+      },
+      "result": "Found 1 customers",
+      "timestamp": "2026-09-06T21:30:53.631125"
+    },
+    {
+      "tool": "get_subscription",
+      "args": {
+        "customer_id": "cust_0009"
+      },
+      "result": {
+        "id": "sub_0009",
+        "customer_id": "cust_0009",
+        "plan": "enterprise",
+        "billing_cycle": "annual",
+        "status": "active",
+        "started_at": "2025-10-01T09:00:00Z",
+        "current_period_start": "2025-10-01T09:00:00Z",
+        "current_period_end": "2026-10-01T09:00:00Z",
+        "price_minor": null,
+        "currency": "USD",
+        "seats_included": 100,
+        "seats_used": 64,
+        "extra_seats": 0,
+        "addons": []
+      },
+      "timestamp": "2026-09-06T21:30:53.773398"
+    },
+    {
+      "tool": "get_invoices",
+      "args": {
+        "customer_id": "cust_0009"
+      },
+      "result": "1 invoices retrieved",
+      "timestamp": "2026-09-06T21:30:54.135912"
+    }
+  ],
+  "token_usage": {
+    "tokens_in": 31,
+    "tokens_out": 137,
+    "estimated_cost_usd": 4.3e-05
+  }
+}

@@ -1,6 +1,7 @@
 import sys
 import time
 import subprocess
+import json
 from pathlib import Path
 import httpx
 from agent.sandbox_client import SandboxClient
@@ -53,7 +54,6 @@ scenarios = [
 
 try:
     for idx, (email, msgs, auto_approve) in enumerate(scenarios, 1):
-        # Reset fixtures before each scenario
         httpx.post(f"{SANDBOX_URL}/_admin/reset", timeout=5.0)
         
         agent = BillingAgent(client)
@@ -61,7 +61,6 @@ try:
         for m in msgs:
             agent.handle_message(m, human_approval_callback=lambda x: auto_approve)
         
-        # Format filename cleanly
         ts = time.strftime("%Y%m%d_%H%M%S")
         filepath = out_dir / f"transcript_0{idx}_{email.split('@')[0]}_{ts}.json"
         
@@ -69,16 +68,16 @@ try:
             "conversation_id": f"conv_0{idx}",
             "customer_email": email,
             "turns": agent.turns,
+            "tool_calls": agent.tool_calls,
             "token_usage": {
                 "tokens_in": agent.total_tokens_in,
                 "tokens_out": agent.total_tokens_out,
                 "estimated_cost_usd": round((agent.total_tokens_in * 0.075 / 1_000_000) + (agent.total_tokens_out * 0.30 / 1_000_000), 6)
             }
         }
-        import json
         with open(filepath, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2)
-        print(f"[{idx}/5] Saved {filepath.name} (Spend: ${data['token_usage']['estimated_cost_usd']:.6f})")
+        print(f"[{idx}/5] Saved {filepath.name} with {len(agent.tool_calls)} tool calls (Spend: ${data['token_usage']['estimated_cost_usd']:.6f})")
 
 finally:
     if server_proc:

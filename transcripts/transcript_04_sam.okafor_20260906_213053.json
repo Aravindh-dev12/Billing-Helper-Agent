@@ -5,37 +5,78 @@
     {
       "speaker": "agent",
       "text": "Welcome to Ferrowave Billing Support. I noticed you have multiple workspaces registered with sam.okafor@northfield.example:\n  1. Northfield Pilot (ID: cust_0003, Region: us)\n  2. Northfield Main (ID: cust_0004, Region: eu)\n\nWhich workspace would you like assistance with today? (Please reply with the number or workspace name)",
-      "timestamp": "2026-09-06T21:12:01.723115"
+      "timestamp": "2026-09-06T21:30:52.771163"
     },
     {
       "speaker": "customer",
       "text": "1",
-      "timestamp": "2026-09-06T21:12:01.723115"
+      "timestamp": "2026-09-06T21:30:52.771163"
     },
     {
       "speaker": "agent",
       "text": "Hello Sam Okafor! I am your Ferrowave Pulse billing assistant.\nI have loaded your account for workspace 'Northfield Pilot' (Starter Plan, monthly).\nHow can I help you today with your billing, plan, or invoices?",
-      "timestamp": "2026-09-06T21:12:02.332244"
+      "timestamp": "2026-09-06T21:30:53.378884"
     },
     {
       "speaker": "customer",
       "text": "Could you give me a breakdown of what was billed on my recent invoice?",
-      "timestamp": "2026-09-06T21:12:02.332244"
+      "timestamp": "2026-09-06T21:30:53.378884"
     },
     {
       "speaker": "agent",
       "text": "Your most recent invoice FW-2026-01004 was issued on 2026-08-22 for $29.00 (USD).\nCharge Breakdown: Starter plan (monthly) ($29.00).\nStatus: paid.",
-      "timestamp": "2026-09-06T21:12:02.332244"
+      "timestamp": "2026-09-06T21:30:53.378884"
     },
     {
       "speaker": "customer",
       "text": "Thanks! Everything looks clear.",
-      "timestamp": "2026-09-06T21:12:02.332244"
+      "timestamp": "2026-09-06T21:30:53.378884"
     },
     {
       "speaker": "agent",
       "text": "I can assist with reviewing invoice details, requesting eligible refunds under our 14-day / 30-day policy, or scheduling plan upgrades and downgrades. What specific billing matter can I assist with?",
-      "timestamp": "2026-09-06T21:12:02.332244"
+      "timestamp": "2026-09-06T21:30:53.378884"
+    }
+  ],
+  "tool_calls": [
+    {
+      "tool": "get_customers_by_email",
+      "args": {
+        "email": "sam.okafor@northfield.example"
+      },
+      "result": "Found 2 customers",
+      "timestamp": "2026-09-06T21:30:52.771163"
+    },
+    {
+      "tool": "get_subscription",
+      "args": {
+        "customer_id": "cust_0003"
+      },
+      "result": {
+        "id": "sub_0003",
+        "customer_id": "cust_0003",
+        "plan": "starter",
+        "billing_cycle": "monthly",
+        "status": "active",
+        "started_at": "2026-08-22T09:00:00Z",
+        "current_period_start": "2026-08-22T09:00:00Z",
+        "current_period_end": "2026-09-22T09:00:00Z",
+        "price_minor": 2900,
+        "currency": "USD",
+        "seats_included": 3,
+        "seats_used": 2,
+        "extra_seats": 0,
+        "addons": []
+      },
+      "timestamp": "2026-09-06T21:30:53.095958"
+    },
+    {
+      "tool": "get_invoices",
+      "args": {
+        "customer_id": "cust_0003"
+      },
+      "result": "1 invoices retrieved",
+      "timestamp": "2026-09-06T21:30:53.378884"
     }
   ],
   "token_usage": {

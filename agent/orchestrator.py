@@ -19,6 +19,17 @@ class BillingAgent:
         self.total_tokens_out = 0
         self.multiple_workspaces: List[Dict[str, Any]] = []
         self.clarifying_questions_asked = 0
+        
+        # Register tool callback to capture every tool call with args and results
+        self.sandbox.trace_callback = self._record_tool_call
+
+    def _record_tool_call(self, tool_name: str, args: Dict[str, Any], result: Any):
+        self.tool_calls.append({
+            "tool": tool_name,
+            "args": args,
+            "result": result,
+            "timestamp": datetime.datetime.now().isoformat()
+        })
 
     def start_conversation(self, email: str) -> str:
         # Initialize sandbox clock
@@ -64,7 +75,6 @@ class BillingAgent:
 
     def _record_turn(self, speaker: str, text: str):
         self.turns.append({"speaker": speaker, "text": text, "timestamp": datetime.datetime.now().isoformat()})
-        # Estimate token usage
         tokens = len(text) // 4
         if speaker == "agent":
             self.total_tokens_out += tokens
@@ -75,7 +85,6 @@ class BillingAgent:
         self._record_turn("customer", user_msg)
         msg_lower = user_msg.lower()
 
-        # Handle multiple workspace disambiguation
         if self.multiple_workspaces and not self.customer:
             for i, c in enumerate(self.multiple_workspaces):
                 if str(i+1) in msg_lower or c["workspace_name"].lower() in msg_lower or c["id"].lower() in msg_lower:
@@ -87,23 +96,18 @@ class BillingAgent:
         if not self.customer:
             return "No customer account is currently selected."
 
-        # Intent 1: Refund Request
         if any(w in msg_lower for w in ["refund", "money back", "reimburse", "cancel and refund"]):
             return self._handle_refund_intent(user_msg, human_approval_callback)
 
-        # Intent 2: Plan Downgrade
         elif any(w in msg_lower for w in ["downgrade", "cheaper", "lower plan", "reduce plan"]):
             return self._handle_downgrade_intent(user_msg)
 
-        # Intent 3: Plan Upgrade
         elif any(w in msg_lower for w in ["upgrade", "scale up", "higher plan", "switch to scale", "switch to growth"]):
             return self._handle_upgrade_intent(user_msg)
 
-        # Intent 4: Invoice / "Why was I charged" explanation
         elif any(w in msg_lower for w in ["why was i charged", "charge", "invoice", "receipt", "bill", "breakdown"]):
             return self._handle_invoice_explanation(user_msg)
 
-        # Default fallback
         reply = (
             "I can assist with reviewing invoice details, requesting eligible refunds under our 14-day / 30-day policy, "
             "or scheduling plan upgrades and downgrades. What specific billing matter can I assist with?"
@@ -142,7 +146,6 @@ class BillingAgent:
 
         amount_usd = max_amount_minor / 100.0
 
-        # Human Approval Enforcement (Requirement: human approval before money moves)
         approved = True
         if human_approval_callback:
             print(f"\n[APPROVAL REQUIRED] The agent proposed a refund of ${amount_usd:.2f} for Invoice {latest_inv['number']}.")
@@ -192,7 +195,6 @@ class BillingAgent:
 
         sub_id = self.subscription["id"]
 
-        # Note: Sandbox rule strictly dictates downgrades must be 'next_cycle'
         try:
             preview = self.sandbox.preview_plan_change(sub_id, plan=target_plan)
             change = self.sandbox.change_subscription(sub_id, plan=target_plan, effective="next_cycle")
@@ -268,6 +270,7 @@ class BillingAgent:
             "customer_email": self.customer.get("email") if self.customer else "unknown",
             "workspace": self.customer.get("workspace_name") if self.customer else "none",
             "turns": self.turns,
+            "tool_calls": self.tool_calls,
             "token_usage": {
                 "tokens_in": self.total_tokens_in,
                 "tokens_out": self.total_tokens_out,
